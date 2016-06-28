@@ -1,0 +1,9 @@
+---
+applications:
+- name: GoogleMaps
+  memory: 1024M
+  host: GoogleMaps
+  domain: cfapps.io
+  buildpack: https://github.com/youdhveer/cloudfoundry.git
+  services:
+  - dev-instance1
