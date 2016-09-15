@@ -1,12 +1,14 @@
-var map;
+		var map;
 		var polyWalkPath;
 		var markersArray;
 		var isGeoPath = false;
-		var directionsService;
-		var directionsDisplay;
+		//var directionsService;
+		//var directionsDisplay;
+		var directionDisplayArray;
 
 				
 		function initMap() {
+			directionDisplayArray=new google.maps.MVCArray();
 			markersArray = new google.maps.MVCArray();
 			var delhiLoc = {
 				lat : 28.6139,
@@ -33,15 +35,15 @@ var map;
 
 			map.addListener('click', drawMyWalk);
 			  
-		    directionsService = new google.maps.DirectionsService;
+		    /*directionsService = new google.maps.DirectionsService;
 			directionsDisplay = new google.maps.DirectionsRenderer({
 			    draggable: true,
 			    map: map
 			});
 			directionsDisplay.addListener('directions_changed', function() {
 				    computeTotalDistance(directionsDisplay.getDirections());
-			});
-loud 
+			});*/
+ 
 		}
 
 		// Adds a marker to the map and push to the array.
@@ -59,7 +61,7 @@ loud
 					var marker=markersArray.getAt(totalMarkers-1);					
 					var destination=marker.getPosition();
 					displayRoute(origin, destination, directionsService, directionsDisplay);
-					
+					directionDisplayArray.push(directionsDisplay);
 				}
 				 
 			} else {
@@ -154,7 +156,13 @@ loud
 				while(path.getLength()>0){
 					path.pop();
 				}
+				while(directionDisplayArray.getLength()>0){
+					var dirDisplay=directionDisplayArray.pop();
+					dirDisplay.setMap(null);
+				}
 			}
+			$('#distanceCalc').val('0');
+			$('#timeCalc').val('0');
 			
 		}
 
